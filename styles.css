@@ -849,6 +849,21 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
   color: var(--gray);
   text-transform: uppercase;
 }
+.footer-contact {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--gray);
+}
+.footer-contact a {
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-contact a:hover { color: var(--white); }
+.footer-contact span { opacity: 0.4; }
 
 /* ── Modal ── */
 .modal-overlay {
