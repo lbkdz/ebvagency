@@ -116,15 +116,61 @@
   update();
 })();
 
-/* ── Hero Parallax ── */
+/* ── Hero Parallax (scroll + mouse) ── */
 (function () {
-  const img = document.querySelector('.hero-bg img');
+  const hero    = document.querySelector('.hero');
+  const img     = document.querySelector('.hero-bg img');
+  const content = document.querySelector('.hero-content');
+  const wraps   = Array.from(document.querySelectorAll('.hfc-wrap'));
   if (!img) return;
+
+  const heroLines = Array.from(document.querySelectorAll('.hero-line'));
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY < window.innerHeight) {
-      img.style.transform = `translateY(${window.scrollY * 0.28}px)`;
+    const sy = window.scrollY;
+    if (sy < window.innerHeight) {
+      img.style.transform = `translateY(${sy * 0.28}px)`;
+
+      // Title lines drift left/right on scroll
+      const p = sy / window.innerHeight;
+      heroLines.forEach((line, i) => {
+        const dir = i % 2 === 0 ? -1 : 1;
+        line.style.translate = `${p * dir * 60}px 0`;
+      });
+
+      // Hero content fades out
+      if (content) content.style.opacity = Math.max(0, 1 - p * 1.8);
     }
   }, { passive: true });
+
+  if (!hero || !window.matchMedia('(pointer: fine)').matches) return;
+
+  let tx = 0, ty = 0, cx = 0, cy = 0, rafId = null, dirty = false;
+
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    tx = (e.clientX - r.left) / r.width  - 0.5;
+    ty = (e.clientY - r.top)  / r.height - 0.5;
+    if (!dirty) { dirty = true; rafId = requestAnimationFrame(tick); }
+  });
+
+  hero.addEventListener('mouseleave', () => { tx = 0; ty = 0; });
+
+  function tick() {
+    cx += (tx - cx) * 0.07;
+    cy += (ty - cy) * 0.07;
+
+    if (content) content.style.transform = `translate(${cx * -9}px, ${cy * -6}px)`;
+
+    wraps.forEach(w => {
+      const d = parseFloat(w.dataset.depth || 2) * 14;
+      w.style.transform = `translate(${cx * d}px, ${cy * d * 0.65}px)`;
+    });
+
+    const dist = Math.abs(tx - cx) + Math.abs(ty - cy);
+    if (dist > 0.002) { rafId = requestAnimationFrame(tick); }
+    else { dirty = false; }
+  }
 })();
 
 /* ── Mobile Hamburger Menu ── */

@@ -279,6 +279,11 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
   object-position: center 30%;
   transform: translateY(0);
   will-change: transform;
+  animation: heroKenBurns 7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+@keyframes heroKenBurns {
+  from { scale: 1.07; }
+  to   { scale: 1; }
 }
 .hero-bg-overlay {
   position: absolute;
@@ -287,6 +292,18 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
     rgba(20,5,5,0.55) 0%,
     rgba(30,8,8,0.2) 35%,
     rgba(10,3,3,0.78) 100%);
+}
+.hero-bg-intro {
+  position: absolute;
+  inset: 0;
+  background: #090208;
+  z-index: 2;
+  pointer-events: none;
+  animation: heroIntroOut 1.8s cubic-bezier(0.76, 0, 0.24, 1) 0.1s both;
+}
+@keyframes heroIntroOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .hero-content {
@@ -302,7 +319,11 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
   text-transform: uppercase;
   color: rgba(255,255,255,0.55);
   margin-bottom: 22px;
-  animation: fadeUp 0.9s var(--ease) 0.4s both;
+  animation: heroEyebrowIn 1s var(--ease) 1.4s both;
+}
+@keyframes heroEyebrowIn {
+  from { opacity: 0; translate: -28px 0; }
+  to   { opacity: 1; translate: 0 0; }
 }
 .hero-title {
   display: flex;
@@ -334,7 +355,7 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
   justify-content: space-between;
   gap: 32px;
   flex-wrap: wrap;
-  animation: fadeUp 0.9s var(--ease) 1.2s both;
+  animation: fadeUp 0.9s var(--ease) 2.4s both;
 }
 .hero-desc {
   max-width: 400px;
@@ -368,6 +389,89 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
   color: rgba(255,255,255,0.4);
   writing-mode: vertical-rl;
   animation: fadeIn 1.2s ease 1.8s both;
+}
+
+/* ── Hero Floating Cards ── */
+.hero-cards-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.hfc-wrap {
+  position: absolute;
+  will-change: transform;
+}
+.hero-float-card {
+  width: 90px;
+  height: 128px;
+  background: rgba(6, 6, 6, 0.82);
+  border: 1px solid rgba(212, 180, 131, 0.22);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  position: relative;
+  opacity: 0;
+}
+.hfc-logo {
+  font-size: 18px;
+  font-weight: 900;
+  font-style: italic;
+  color: #d4b483;
+  letter-spacing: 0.06em;
+}
+.hfc-sub {
+  font-size: 5.5px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+}
+.hfc-corner {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.22);
+  line-height: 1;
+}
+.hfc-corner.tl { top: 9px; left: 10px; }
+.hfc-corner.br { bottom: 9px; right: 10px; transform: rotate(180deg); }
+
+/* Wrapper positions (absolute inside hero-cards-layer) */
+.hfc-1 { top: 8%;  right: 7%; }
+.hfc-2 { top: 35%; right: 20%; }
+.hfc-3 { top: 60%; right: 4%; }
+
+/* Inner card: rotation + entrance + float */
+.hfc-1 .hero-float-card {
+  transform: rotate(-22deg);
+  animation: hfcEntrance 1.1s 0.9s var(--ease) both, hfcFloat 4.2s ease-in-out 2s infinite alternate;
+}
+.hfc-2 .hero-float-card {
+  transform: rotate(11deg);
+  animation: hfcEntrance 1.1s 1.2s var(--ease) both, hfcFloat 5.0s ease-in-out 2.3s infinite alternate;
+}
+.hfc-3 .hero-float-card {
+  transform: rotate(-7deg);
+  animation: hfcEntrance 1.1s 1.5s var(--ease) both, hfcFloat 3.7s ease-in-out 2.6s infinite alternate;
+}
+
+@keyframes hfcEntrance {
+  from { opacity: 0; translate: 0 28px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+@keyframes hfcFloat {
+  from { translate: 0 0; }
+  to   { translate: 0 -14px; }
+}
+
+@media (max-width: 767px) {
+  .hero-cards-layer { display: none; }
 }
 
 /* ── Marquee ── */
