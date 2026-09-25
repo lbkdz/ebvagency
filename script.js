@@ -1,5 +1,69 @@
 'use strict';
 
+/* ── Lenis Smooth Scroll ── */
+(function () {
+  if (typeof Lenis === 'undefined') return;
+  const lenis = new Lenis({ duration: 1.25, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  window._lenis = lenis;
+})();
+
+/* ── Text Scramble ── */
+(function () {
+  const CHARS = '!<>-_\\/[]{}—=+*^?#♠♥♦♣ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  function scramble(el) {
+    const original = el.dataset.original || el.innerText;
+    el.dataset.original = original;
+    let frame = 0;
+    const queue = original.split('').map((to, i) => ({
+      to, start: Math.floor(Math.random() * 6), end: Math.floor(Math.random() * 10) + 6, char: ''
+    }));
+    let raf;
+    (function tick() {
+      let out = '', done = 0;
+      queue.forEach(q => {
+        if (frame >= q.end) { out += q.to; done++; }
+        else if (frame >= q.start) {
+          if (!q.char || Math.random() < 0.3) q.char = CHARS[Math.floor(Math.random() * CHARS.length)];
+          out += '<span class="scramble-char">' + q.char + '</span>';
+        } else { out += q.to; }
+      });
+      el.innerHTML = out;
+      if (done < queue.length) { frame++; raf = requestAnimationFrame(tick); }
+    })();
+    return () => cancelAnimationFrame(raf);
+  }
+
+  document.querySelectorAll('.service-name, .client-item').forEach(el => {
+    let cancel;
+    el.addEventListener('mouseenter', () => { if (cancel) cancel(); cancel = scramble(el); });
+    el.addEventListener('mouseleave', () => {
+      if (cancel) cancel();
+      el.textContent = el.dataset.original || el.textContent;
+    });
+  });
+})();
+
+/* ── 3D Card Tilt ── */
+(function () {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll('.play-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.setProperty('--rx', (y * -18) + 'deg');
+      card.style.setProperty('--ry', (x *  18) + 'deg');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+})();
+
 /* ── Custom Cursor ── */
 (function () {
   if (!window.matchMedia('(pointer: fine)').matches) return;
@@ -7,22 +71,25 @@
   const dot  = document.getElementById('cursorDot');
   if (!glow || !dot) return;
 
-  let mx = 0, my = 0, gx = 0, gy = 0;
+  let mx = 0, my = 0, gx = 0, gy = 0, dirty = false, rafId = null;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX;
     my = e.clientY;
     dot.style.left = mx + 'px';
     dot.style.top  = my + 'px';
+    if (!dirty) { dirty = true; rafId = requestAnimationFrame(tick); }
   });
 
-  (function tick() {
+  function tick() {
     gx += (mx - gx) * 0.07;
     gy += (my - gy) * 0.07;
     glow.style.left = (gx - 250) + 'px';
     glow.style.top  = (gy - 250) + 'px';
-    requestAnimationFrame(tick);
-  })();
+    const dist = Math.abs(mx - gx) + Math.abs(my - gy);
+    if (dist > 0.3) { rafId = requestAnimationFrame(tick); }
+    else { dirty = false; }
+  }
 
   document.querySelectorAll('a, button, .work-item, .team-card, .stat-item, .service-item').forEach(el => {
     el.addEventListener('mouseenter', () => dot.classList.add('expanded'));
@@ -145,6 +212,7 @@
   function show(el) {
     el.style.opacity = '1';
     el.style.transform = 'none';
+    el.addEventListener('transitionend', () => { el.style.willChange = 'auto'; }, { once: true });
   }
 
   const obs = new IntersectionObserver(entries => {

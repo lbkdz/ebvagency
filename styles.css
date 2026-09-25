@@ -1080,6 +1080,7 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
   .nav { padding: 20px 24px; }
   .nav.scrolled { padding: 14px 24px; }
   .nav-links { display: none; }
+  .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
   .nav-mobile { display: flex; }
 
