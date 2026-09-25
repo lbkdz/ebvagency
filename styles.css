@@ -497,10 +497,7 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
 .marquee-track .msep { color: rgba(255,255,255,0.18); padding: 0 4px; }
 
 /* ── Services Section ── */
-.services-section {
-  padding: 120px 48px;
-  background: var(--white);
-}
+/* ── Section Label (shared) ── */
 .section-label {
   font-size: 10px;
   font-weight: 700;
@@ -511,75 +508,172 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
 }
 .section-label.light { color: rgba(255,255,255,0.35); }
 
-.services-list { border-top: 1px solid var(--border); }
+/* ── Services — Mega Bands ── */
+.services-section {
+  background: var(--black);
+  padding: 0;
+}
 
-.service-item { border-bottom: 1px solid var(--border); }
-.service-item-top {
+.svc-head {
+  padding: 100px 64px 60px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.svc-head .section-label {
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 0;
+}
+.svc-head-sub {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.28);
+  font-weight: 400;
+}
+
+.svc-band {
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  cursor: none;
+  transition: background 0.5s ease, opacity 0.4s ease;
+}
+.svc-band:hover { background: rgba(201,169,110,0.04); }
+
+/* Dim non-hovered via :has() */
+.svc-mega:has(.svc-band:hover) .svc-band:not(:hover) { opacity: 0.28; }
+
+/* Giant watermark number */
+.svc-band-bg {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.2em;
+  font-size: clamp(140px, 22vw, 320px);
+  font-weight: 900;
+  color: rgba(255,255,255,0.025);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.05em;
+  transition: color 0.6s ease, transform 0.7s var(--ease);
+}
+.svc-band:hover .svc-band-bg {
+  color: rgba(201,169,110,0.06);
+  transform: translateX(28px) scale(1.05);
+}
+
+/* Row */
+.svc-band-row {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 28px 0;
-  cursor: none;
-  user-select: none;
+  gap: 32px;
+  padding: 0 64px;
+  height: 112px;
+  position: relative;
+  z-index: 1;
 }
-.service-item-top:hover .service-name { opacity: 0.42; }
-.service-num {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--gray);
-  min-width: 28px;
-  transition: color 0.3s;
-}
-.service-item.open .service-num { color: var(--black); }
-.service-name {
-  flex: 1;
-  font-size: clamp(22px, 3.5vw, 40px);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  transition: opacity 0.25s;
-}
-.service-arrow {
-  font-size: 20px;
-  color: var(--gray);
-  transition: transform 0.4s var(--ease), color 0.3s;
-  display: inline-block;
-}
-.service-item.open .service-arrow { transform: rotate(90deg); color: var(--black); }
 
-.service-item-body {
+.svc-band-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.22);
+  min-width: 36px;
+  transition: color 0.4s;
+}
+.svc-band:hover .svc-band-num { color: #c9a96e; }
+
+.svc-band-name {
+  flex: 1;
+  font-size: clamp(26px, 4.2vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  line-height: 1;
+  transition: font-size 0.65s var(--ease), letter-spacing 0.65s var(--ease);
+}
+.svc-band-name em {
+  font-style: italic;
+  font-weight: 300;
+  opacity: 0.45;
+}
+.svc-band:hover .svc-band-name {
+  font-size: clamp(38px, 6.5vw, 96px);
+  letter-spacing: -0.04em;
+}
+
+.svc-band-arrow {
+  font-size: 22px;
+  color: rgba(255,255,255,0.22);
+  transition: transform 0.55s var(--ease), color 0.4s;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.svc-band:hover .svc-band-arrow {
+  transform: translate(7px, -7px);
+  color: #c9a96e;
+}
+
+/* Expand reveal */
+.svc-band-reveal {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s var(--ease);
-  overflow: hidden;
+  transition: grid-template-rows 0.65s var(--ease);
+  position: relative;
+  z-index: 1;
 }
-.service-item.open .service-item-body { grid-template-rows: 1fr; }
-.service-item-body > div {
+.svc-band:hover .svc-band-reveal,
+.svc-band.open .svc-band-reveal { grid-template-rows: 1fr; }
+
+.svc-band-body {
   overflow: hidden;
-  padding-bottom: 0;
-  transition: padding-bottom 0.45s var(--ease);
+  padding: 0 64px;
+  transition: padding-bottom 0.65s var(--ease);
 }
-.service-item.open .service-item-body > div { padding-bottom: 36px; }
-.service-item-body p {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--gray);
+.svc-band:hover .svc-band-body,
+.svc-band.open .svc-band-body { padding-bottom: 56px; }
+
+.svc-band-body p {
+  font-size: 14px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.42);
   max-width: 520px;
-  margin-bottom: 22px;
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s var(--ease) 0.18s, transform 0.55s var(--ease) 0.18s;
 }
-.service-item-body ul { display: flex; flex-wrap: wrap; gap: 8px; }
-.service-item-body li {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+.svc-band:hover .svc-band-body p,
+.svc-band.open .svc-band-body p { opacity: 1; transform: none; }
+
+.svc-band-body ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s var(--ease) 0.28s, transform 0.55s var(--ease) 0.28s;
+}
+.svc-band:hover .svc-band-body ul,
+.svc-band.open .svc-band-body ul { opacity: 1; transform: none; }
+
+.svc-band-body li {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 6px 14px;
-  border: 1px solid var(--border);
+  padding: 7px 16px;
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 2px;
-  color: var(--black);
-  transition: background 0.2s, color 0.2s;
+  color: rgba(255,255,255,0.48);
+  transition: border-color 0.25s, color 0.25s;
 }
-.service-item-body li:hover { background: var(--black); color: var(--white); }
+.svc-band-body li:hover {
+  border-color: rgba(201,169,110,0.5);
+  color: #c9a96e;
+}
 
 /* ── Work Section ── */
 /* ── Work / Card Fan Section ── */
@@ -1191,7 +1285,15 @@ button { font-family: inherit; cursor: none; border: none; background: none; }
   .hero-content { padding: 0 24px 64px; }
   .hero-scroll { display: none; }
 
-  .services-section,
+  .svc-head { padding: 64px 24px 44px; flex-direction: column; gap: 8px; }
+  .svc-band-row { padding: 0 24px; height: 88px; gap: 16px; }
+  .svc-band-body { padding: 0 24px; }
+  .svc-band:hover .svc-band-body,
+  .svc-band.open .svc-band-body { padding-bottom: 40px; }
+  .svc-band-name { font-size: clamp(22px, 6vw, 42px) !important; }
+  .svc-band-bg { font-size: clamp(100px, 28vw, 160px); }
+  .svc-mega:has(.svc-band:hover) .svc-band:not(:hover) { opacity: 1; }
+
   .team-section { padding: 80px 24px; }
   .work-section { padding: 80px 0 120px; }
 

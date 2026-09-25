@@ -36,7 +36,7 @@
     return () => cancelAnimationFrame(raf);
   }
 
-  document.querySelectorAll('.service-name, .client-item').forEach(el => {
+  document.querySelectorAll('.client-item').forEach(el => {
     let cancel;
     el.addEventListener('mouseenter', () => { if (cancel) cancel(); cancel = scramble(el); });
     el.addEventListener('mouseleave', () => {
@@ -194,17 +194,15 @@
   menu.querySelectorAll('a, button').forEach(el => el.addEventListener('click', close));
 })();
 
-/* ── Services Accordion ── */
+/* ── Services Bands — mobile click toggle ── */
 (function () {
-  const items = document.querySelectorAll('.service-item');
-  if (!items.length) return;
-  items.forEach(item => {
-    const top = item.querySelector('.service-item-top');
-    if (!top) return;
-    top.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
-      items.forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
+  const bands = document.querySelectorAll('.svc-band');
+  if (!bands.length) return;
+  bands.forEach(band => {
+    band.querySelector('.svc-band-row').addEventListener('click', () => {
+      const isOpen = band.classList.contains('open');
+      bands.forEach(b => b.classList.remove('open'));
+      if (!isOpen) band.classList.add('open');
     });
   });
 })();
