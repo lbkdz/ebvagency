@@ -54,10 +54,10 @@
   <div class="hero-content">
     <p class="hero-eyebrow">Born in Paris &nbsp;·&nbsp; Based in Dubai</p>
     <h1 class="hero-title">
-      <span class="hero-line">Bold</span>
-      <span class="hero-line hero-line-outline">Events.</span>
-      <span class="hero-line">Smart</span>
-      <span class="hero-line hero-line-outline">Strategy.</span>
+      <span class="hero-line-mask"><span class="hero-line" style="animation-delay:0.05s">Bold</span></span>
+      <span class="hero-line-mask"><span class="hero-line hero-line-outline" style="animation-delay:0.22s">Events.</span></span>
+      <span class="hero-line-mask"><span class="hero-line" style="animation-delay:0.38s">Smart</span></span>
+      <span class="hero-line-mask"><span class="hero-line hero-line-outline" style="animation-delay:0.54s">Strategy.</span></span>
     </h1>
     <div class="hero-bottom">
       <p class="hero-desc">A full-service events & management agency delivering luxury experiences across Dubai & Paris.</p>
@@ -238,8 +238,36 @@
   </div>
 </section>
 
+<!-- About -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <p class="section-label">The Story</p>
+    <div class="about-story">
+      <h2 class="about-headline">Paris taught us precision.<br><em>Dubai gave us the stage.</em></h2>
+      <div class="about-body">
+        <p>EBV carried Parisian savoir-faire across the sands of the Gulf — where elegance and ambition stopped competing, and started dancing.</p>
+        <p>We are a full-service events &amp; management agency built for brands who want it all done. One team. Every channel. No compromise.</p>
+      </div>
+    </div>
+    <div class="about-pillars">
+      <div class="about-pillar">
+        <span class="about-pillar-num">01</span>
+        <p>Born from the luxury event culture of Paris</p>
+      </div>
+      <div class="about-pillar">
+        <span class="about-pillar-num">02</span>
+        <p>Rooted in the ambition and scale of Dubai</p>
+      </div>
+      <div class="about-pillar">
+        <span class="about-pillar-num">03</span>
+        <p>Built for brands who refuse to be ordinary</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Clients -->
-<section class="clients-section" id="about">
+<section class="clients-section">
   <div class="clients-header">
     <p class="section-label">Our Clients</p>
     <h2 class="clients-title">They Trust Us</h2>
@@ -304,20 +332,44 @@
 
 <!-- Footer -->
 <footer class="footer">
-  <div class="footer-logo">
-    <span class="logo-ebv">EBV</span>
-    <div class="logo-wordmark">
-      <span class="logo-name" style="color:#000">Agency</span>
-      <span class="logo-sub" style="color:#888">Events &amp; Management</span>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <span class="logo-ebv">EBV</span>
+        <div class="logo-wordmark">
+          <span class="logo-name" style="color:#fff">Agency</span>
+          <span class="logo-sub" style="color:#888">Events &amp; Management</span>
+        </div>
+      </div>
+      <p class="footer-tagline">Born in Paris · Based in Dubai</p>
+      <div class="footer-contact">
+        <a href="tel:+971585368644">+971 58 536 8644</a>
+        <span>·</span>
+        <a href="mailto:Sales@ebvagency.com">Sales@ebvagency.com</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://instagram.com/ebv_dubai" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          @ebv_dubai
+        </a>
+      </div>
     </div>
+    <nav class="footer-nav">
+      <a href="#services" class="footer-nav-link">Services</a>
+      <a href="#work" class="footer-nav-link">Work</a>
+      <a href="#about" class="footer-nav-link">About</a>
+      <a href="#" class="footer-nav-link open-modal">Start a Project</a>
+    </nav>
   </div>
-  <p class="footer-tagline">Born in Paris · Based in Dubai</p>
-  <div class="footer-contact">
-    <a href="tel:+971585368644">+971 58 536 8644</a>
-    <span>·</span>
-    <a href="mailto:Sales@ebvagency.com">Sales@ebvagency.com</a>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 EBV Agency. Dubai &amp; Paris.</p>
   </div>
 </footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/971585368644" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
 
 <!-- Contact Modal -->
 <div class="modal-overlay" id="contactModal">
@@ -345,11 +397,11 @@
           <label>Service</label>
           <select name="service">
             <option value="" disabled selected>Select a service</option>
-            <option>In-Store Activation</option>
-            <option>Events &amp; Galas</option>
+            <option>Digital &amp; Media</option>
             <option>Brand &amp; Strategy</option>
-            <option>AI Solutions</option>
-            <option>Creative Production</option>
+            <option>Event &amp; P.R</option>
+            <option>In-Store Activation</option>
+            <option>Partnership</option>
             <option>Other</option>
           </select>
         </div>
@@ -368,7 +420,8 @@
   </div>
 </div>
 
-<script src="script.js?v=4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="script.js?v=5"></script>
 <script>
 (function() {
   var modal = document.getElementById('contactModal');
